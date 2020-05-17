@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,18 +31,22 @@
                             <div class="col-md-12">
                                 <div class="body-box border rounded">
                                     <h4>Email Subscription</h4>
-                                    <form method="POST">
+                                    <form:form method="POST" action="/" modelAttribute="userBean">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="form-group col-md-9">
-                                                    <input type="email" id="email" class="form-control email-subscription" placeholder="Enter email" required>
+                                                <form:errors title="failed" path="*" cssClass="alert alert-danger w-100 col-md-10 mx-auto" />
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="email" id="email" class="form-control email-subscription" name="email" placeholder="Enter email" required>
                                                 </div>
-                                                <div class="form-group col-md-3">
+                                                <div class="form-group col-md-2">
                                                     <input type="submit" class="btn btn-primary" value="Subscribe">
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form:form>
                                 </div>
                             </div>
                         </div>
