@@ -41,5 +41,4 @@ public class UserDao {
 		}
 		return 2;
 	}
-
 }
