@@ -33,8 +33,7 @@ public class UserDao {
 		});
 		} catch (DataAccessException reg) {
 			try {
-//				return stmt.update("INSERT INTO tbl_users (email) VALUES (?)", userBean.getEmail());
-				return 1;
+				return stmt.update("INSERT INTO tbl_users (email) VALUES (?)", userBean.getEmail());
 			} catch (DataAccessException nreg) {
 				return 0;
 			}
