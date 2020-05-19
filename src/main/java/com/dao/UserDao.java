@@ -10,12 +10,15 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bean.UserBean;
+import com.util.MailSender;
 
 @Repository
 public class UserDao {
 	
 	@Autowired
 	JdbcTemplate stmt;
+	@Autowired
+	MailSender mailSender;
 
 	public int subscribeUser(UserBean userBean) {
 		
@@ -33,7 +36,9 @@ public class UserDao {
 		});
 		} catch (DataAccessException reg) {
 			try {
-				return stmt.update("INSERT INTO tbl_users (email) VALUES (?)", userBean.getEmail());
+				int count = stmt.update("INSERT INTO tbl_users (email) VALUES (?)", userBean.getEmail());
+				mailSender.sendMail(userBean.getEmail(), "Successfully subscribed to Bhavik Parmar's Newsletter", "Welcome " + userBean.getEmail() + ",<br>Thanks for subscribing to mailing list, I will reach you out soon.");
+				return count;
 			} catch (DataAccessException nreg) {
 				return 0;
 			}
