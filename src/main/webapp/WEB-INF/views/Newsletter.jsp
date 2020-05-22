@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bhavik Parmar</title>
+<title>New Topic</title>
 
 <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -18,33 +18,29 @@
 <body>
     <div class="container-md">
         <div class="row">
-            <div class="col-md-10 mx-auto">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
                 <div class="outer-box rounded">
                     <div class="container-md">
-                        <div class="row header-box">
-                            <div class="col-md-9">
-                                <h1 style="height: 100%; vertical-align: middle;">Bhavik Parmar</h1>
-                            </div>
-                            <div class="col-md-3"><img src="/media/bvk.jpg" class="rounded" width="135px" height="135px"></div>
-                        </div>
-                    </div>
-                    <div class="container-md">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 mx-auto">
                                 <div class="body-box border rounded">
-                                    <h4>Email Subscription</h4>
-                                    <form:form modelAttribute="userBean">
+                                    <h2>New Topic</h2>
+                                    <form:form modelAttribute="topicBean" method="POST" action="/topic">
                                         <div class="container">
                                             <div class="row">
                                                 <div id="errorMessage" class="alert alert-danger w-100 col-md-10 mx-auto d-none" role="alert"></div>
                                                 <div id="successMessage" class="alert alert-success w-100 col-md-10 mx-auto d-none" role="alert"></div>
                                             </div>
-                                            <div class="col-md-12 row mx-auto">
-                                                <div class="form-group col-md-9 mx-auto">
-                                                    <input type="email" id="email" class="form-control email-subscription" name="email" placeholder="Enter email" required>
+                                            <div class="col-md-10 row mx-auto">
+                                                <div class="form-group col-md-8 mx-auto">
+                                                    <input type="text" id="subject" class="form-control" name="subject" placeholder="Enter subject" required>
                                                 </div>
-                                                <div class="form-group col-md-3 mx-auto">
-                                                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                                                <div class="form-group col-md-8 mx-auto">
+                                                    <textarea id="subject" class="form-control" name="message" placeholder="Enter message" aria-multiline="true" required></textarea>
+                                                </div>
+                                                <div class="form-group col-md-8 mx-auto">
+                                                    <button type="submit" class="btn btn-primary">Publish Topic</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -55,11 +51,12 @@
                     </div>
                     <div class="container-md">
                         <div class="row">
-                            <div class="col-md-11 text-right mx-auto"><a href="/admin"><small>Access Administration</small></a></div>
+                            <div class="col-md-11 text-right mx-auto"><small><a href="/admin">Logout</a></small></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
     <script>
@@ -69,22 +66,17 @@
                 $(':submit').html('<span class="spinner-border spinner-border-sm"></span>');
 
                 $.ajax({
-                    url: '/',
+                    url: '/topic',
                     type: 'POST',
                     data: $('form').serialize()
                 }).done(function (response) {
-                    if (response == 2) {
-                        $('#errorMessage').html('Already subscribed to mailing list');
-                        $('#errorMessage').removeClass('d-none');
-                        $('#errorMessage').show();
-                        $('#successMessage').hide();
-                    } else if (response == 0) {
-                        $('#errorMessage').html('Couldn\'t subscribe to mailing list, Please try again');
+                    if (response == 0) {
+                        $('#errorMessage').html('Published topic notified to 0 users');
                         $('#errorMessage').removeClass('d-none');
                         $('#errorMessage').show();
                         $('#successMessage').hide();
                     } else {
-                        $('#successMessage').html('Successfully subscribed to mailing list');
+                        $('#successMessage').html('Published topic notified to ' + response + ' users');
                         $('#successMessage').removeClass('d-none');
                         $('#successMessage').show();
                         $('#errorMessage').hide();
@@ -101,7 +93,7 @@
 
             $(document).ajaxComplete(function() {
                 $(':submit').prop('disabled', false);
-                $(':submit').html('Subscribe');
+                $(':submit').html('Publish Topic');
             });
         });
     </script>
