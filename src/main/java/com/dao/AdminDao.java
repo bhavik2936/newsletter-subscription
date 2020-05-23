@@ -8,8 +8,13 @@ import com.bean.AdminBean;
 public class AdminDao {
 
 	public boolean authenticate(AdminBean adminBean) {
-		if (adminBean.getUsername().equals(System.getenv("adminUsername")) && adminBean.getPassword().equals(System.getenv("adminPassword"))) {
-			return true;
+		try {
+			if (adminBean.getUsername().equals(System.getenv("adminUsername"))
+					&& adminBean.getPassword().equals(System.getenv("adminPassword"))) {
+				return true;
+			}
+		} catch (NullPointerException e) {
+			return false;
 		}
 		return false;
 	}
