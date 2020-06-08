@@ -1,10 +1,13 @@
 package com.bean;
 
+import java.util.List;
+
 public class TopicBean {
 
 	String topic;
 	String subject;
 	String message;
+	List<CategoryBean> categories;
 
 	public String getTopic() {
 		return topic;
@@ -30,4 +33,11 @@ public class TopicBean {
 		this.message = message;
 	}
 
+	public List<CategoryBean> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<CategoryBean> categories) {
+		this.categories = categories;
+	}
 }

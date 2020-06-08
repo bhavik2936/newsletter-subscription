@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -35,6 +36,12 @@
                                             <div class="col-md-10 row mx-auto">
                                                 <div class="form-group col-md-8 mx-auto">
                                                     <input type="text" id="subject" class="form-control" name="subject" placeholder="Enter subject" required>
+                                                </div>
+                                                <div class="form-group col-md-8 mx-auto">
+                                                	<form:select path="categories" multiple="false" cssClass="form-control">
+                                                		<form:option value="0" label="All Subscribers"></form:option><c:forEach items="${topicBean.categories}" var="category">
+                                                		<form:option value="${category.category_id}" label="${category.category_name}"></form:option></c:forEach>
+                                                	</form:select>
                                                 </div>
                                                 <div class="form-group col-md-8 mx-auto">
                                                     <textarea id="subject" class="form-control" name="message" placeholder="Enter message" aria-multiline="true" required></textarea>

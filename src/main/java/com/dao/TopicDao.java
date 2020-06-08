@@ -23,29 +23,46 @@ public class TopicDao {
 	MailSender mailSender;
 
 	public List<UserBean> getTopicSubscribers(TopicBean topicBean) {
+		int category_id = topicBean.getCategories().get(0).getCategory_id();
+
 		try {
-			return stmt.query("SELECT * FROM tbl_users", new RowMapper<UserBean>() {
-				@Override
-				public UserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
-					UserBean userBean = new UserBean();
-					userBean.setUser_id(rs.getInt("user_id"));
-					userBean.setEmail(rs.getString("email"));
-					userBean.setIs_active(rs.getBoolean("is_active"));
-					return userBean;
-				}
-			});
+			if (category_id != 0) {
+				return stmt.query(
+						"SELECT * FROM tbl_users u JOIN tbl_user_category c ON u.user_id = c.user_id WHERE c.category_id = ?",
+						new Object[] { topicBean.getCategories().get(0).getCategory_id() }, new RowMapper<UserBean>() {
+							@Override
+							public UserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+								UserBean userBean = new UserBean();
+								userBean.setUser_id(rs.getInt("user_id"));
+								userBean.setEmail(rs.getString("email"));
+								userBean.setIs_active(rs.getBoolean("is_active"));
+								return userBean;
+							}
+						});
+			} else {
+				return stmt.query("SELECT * FROM tbl_users", new RowMapper<UserBean>() {
+					@Override
+					public UserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+						UserBean userBean = new UserBean();
+						userBean.setUser_id(rs.getInt("user_id"));
+						userBean.setEmail(rs.getString("email"));
+						userBean.setIs_active(rs.getBoolean("is_active"));
+						return userBean;
+					}
+				});
+			}
 		} catch (DataAccessException e) {
 			return null;
 		}
 	}
-	
+
 	public int notifySubscribers(TopicBean topicBean) {
 		List<UserBean> userList = getTopicSubscribers(topicBean);
 		int count = 0;
 		
 		for (UserBean userBean : userList) {
 			if (mailSender.sendMail(userBean.getEmail(), topicBean.getSubject(), topicBean.getMessage())) {
-				count ++;
+				count++;
 			}
 		}
 		return count;

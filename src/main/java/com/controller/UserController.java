@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.bean.AdminBean;
+import com.bean.TopicBean;
 import com.bean.UserBean;
 import com.dao.AdminDao;
 import com.dao.CategoryDao;
@@ -59,8 +60,9 @@ public class UserController {
 
 //	topic publishment model
 	@GetMapping("/newsletter")
-	public String newsletter(@ModelAttribute("adminBean") AdminBean adminBean) {
+	public String newsletter(@ModelAttribute("adminBean") AdminBean adminBean, TopicBean topicBean) {
 		if (adminDao.authenticate(adminBean)) {
+			topicBean.setCategories(categoryDao.fetchCategories());
 			return "Newsletter";
 		}
 		return "redirect:/admin";
