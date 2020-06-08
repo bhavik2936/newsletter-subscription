@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.bean.AdminBean;
+import com.bean.UserBean;
 import com.dao.AdminDao;
+import com.dao.CategoryDao;
 import com.dao.UserDao;
 
 //works as a Controller and defining session attributes
@@ -21,10 +23,13 @@ public class UserController {
 	UserDao userDao;
 	@Autowired
 	AdminDao adminDao;
+	@Autowired
+	CategoryDao categoryDao;
 
 //	serves GET method of HTTP for base URL '/'
 	@GetMapping("/")
-	public String dashboard() {
+	public String dashboard(UserBean userBean) {
+		userBean.setCategories(categoryDao.fetchCategories());
 		return "Dashboard";
 	}
 
@@ -61,6 +66,7 @@ public class UserController {
 		return "redirect:/admin";
 	}
 
+//	log out from admin access
 	@GetMapping("/logout")
 	public String logout(SessionStatus status) {
 		status.setComplete();

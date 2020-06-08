@@ -1,7 +1,6 @@
 package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +20,7 @@ public class APIController {
 
 //	add new user email to subscription list
 	@PostMapping("/")
-	public int subscribeEmail(UserBean userBean, BindingResult result) {
+	public int subscribeEmail(UserBean userBean) {
 		return userDao.subscribeUser(userBean);
 	}
 	

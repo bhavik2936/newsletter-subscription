@@ -1,9 +1,12 @@
 package com.bean;
 
+import java.util.List;
+
 public class UserBean {
 
 	int user_id;
 	String email;
+	List<CategoryBean> categories;
 	boolean is_active;
 
 	public int getUser_id() {
@@ -22,6 +25,14 @@ public class UserBean {
 		this.email = email;
 	}
 
+	public List<CategoryBean> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<CategoryBean> categories) {
+		this.categories = categories;
+	}
+	
 	public boolean isIs_active() {
 		return is_active;
 	}

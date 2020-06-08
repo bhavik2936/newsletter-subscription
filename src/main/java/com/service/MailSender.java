@@ -25,7 +25,7 @@ public class MailSender {
 		Email from = new Email("bhavik2936@gmail.com", "Bhavik Parmar");
 		Email to = new Email(receiver);
 
-		message = "<div dir='ltr'><br clear='all'><div>" + message
+		message = "<div dir='ltr'><div>" + message
 				+ "</div>-- <br><div dir='ltr' class='gmail_signature' data-smartmail='gmail_signature'><div dir='ltr'><div><div dir='ltr'><blockquote style='margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex'><font color='#0b5394'><span style='font-size:large'>Bhavik Parmar<br></span></font><a href='http://linkedin.com/in/bhavikpparmar' target='_blank'><img src='http://drive.google.com/uc?id=1ReO19Ken2r1as1RB8D3UgC6mGLOdjQjh' style='color:rgb(11,83,148);font-size:large' height='30px' width='35px'></a><font color='#0b5394'><br></font></blockquote><div><div dir='ltr'><blockquote style='margin:0px 0px 0px 40px;border:none;padding:0px'></blockquote></div></div></div></div></div></div></div>";
 		Content content = new Content("text/html", message);
 		Mail mail = new Mail(from, subject, to, content);

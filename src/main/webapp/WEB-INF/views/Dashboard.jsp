@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -54,6 +55,16 @@
                                                     <button type="submit" class="btn btn-primary">Subscribe</button>
                                                 </div>
                                             </div>
+                                            <div id="categories" class="d-none">
+                                                <hr>
+                                                <div class="row col-md-10 mx-auto">
+                                                    <c:forEach items="${userBean.categories}" var="category">
+                                                        <div class="col-md-4 mx-auto">
+                                                        	<form:checkbox path="categories" value="${category.category_id}" label="${category.category_name}" cssClass="m-1"/>
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                            </div>
                                         </div>
                                     </form:form>
                                 </div>
@@ -72,38 +83,49 @@
     </div>
     <script>
         $(document).ready(function() {
+            $(':input').focus(function() {
+                $('#categories').removeClass('d-none');
+                $('#categories').show();
+            });
             $('form').submit(function() {
-                $(':submit').prop('disabled', true);
-                $(':submit').html('<span class="spinner-border spinner-border-sm"></span>');
+                // checking if any of topic subscribed or not
+                if ($(':checkbox:checked').length) {
+                    $(':submit').prop('disabled', true);
+                    $(':submit').html('<span class="spinner-border spinner-border-sm"></span>');
 
-                $.ajax({
-                    url: '/',
-                    type: 'POST',
-                    data: $('form').serialize()
-                }).done(function (response) {
-                    if (response == 2) {
-                        $('#errorMessage').html('Already subscribed to mailing list');
+                    $.ajax({
+                        url: '/',
+                        type: 'POST',
+                        data: $('form').serialize()
+                    }).done(function (response) {
+                        if (response == 2) {
+                            $('#errorMessage').html('Already subscribed to mailing list');
+                            $('#errorMessage').removeClass('d-none');
+                            $('#errorMessage').show();
+                            $('#successMessage').hide();
+                        } else if (response == 0) {
+                            $('#errorMessage').html('Couldn\'t subscribe to mailing list, Please try again');
+                            $('#errorMessage').removeClass('d-none');
+                            $('#errorMessage').show();
+                            $('#successMessage').hide();
+                        } else {
+                            $('#successMessage').html('Successfully subscribed to mailing list');
+                            $('#successMessage').removeClass('d-none');
+                            $('#successMessage').show();
+                            $('#errorMessage').hide();
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        $('#errorMessage').html('An error occured, Please try again');
                         $('#errorMessage').removeClass('d-none');
                         $('#errorMessage').show();
                         $('#successMessage').hide();
-                    } else if (response == 0) {
-                        $('#errorMessage').html('Couldn\'t subscribe to mailing list, Please try again');
-                        $('#errorMessage').removeClass('d-none');
-                        $('#errorMessage').show();
-                        $('#successMessage').hide();
-                    } else {
-                        $('#successMessage').html('Successfully subscribed to mailing list');
-                        $('#successMessage').removeClass('d-none');
-                        $('#successMessage').show();
-                        $('#errorMessage').hide();
-                    }
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    $('#errorMessage').html('An error occured, Please try again');
+                    });
+                } else {
+                    $('#errorMessage').html('Please subscribe to any topic');
                     $('#errorMessage').removeClass('d-none');
                     $('#errorMessage').show();
                     $('#successMessage').hide();
-                });
-
+                }
                 return false;
             });
 
