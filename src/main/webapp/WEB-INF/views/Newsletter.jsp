@@ -58,8 +58,8 @@
                     </div>
                     <div class="container-md">
                         <div class="row">
-                            <div class="col-md-6 text-left mx-auto"><a class="text-decoration-none" href="/logout"><small>Logout</small></a></div>
-                            <div class="col-md-5 text-right mx-auto"><a class="text-decoration-none" target="_blank" href="mailto:bhavik2936@gmail.com?subject=bvk-blog.herokuapp.com error report on page: 'New Topic Request'&body=reporting error on page 'New Topic Request'%0D%0A--"><small>Report an issue</small></a></div>
+                            <div class="col-6 text-left mx-auto"><a class="text-decoration-none" href="/logout"><small>Logout</small></a></div>
+                            <div class="col-5 text-right mx-auto"><a class="text-decoration-none" target="_blank" href="mailto:bhavik2936@gmail.com?subject=bvk-blog.herokuapp.com error report on page: 'New Topic Request'&body=reporting error on page 'New Topic Request'%0D%0A--"><small>Report an issue</small></a></div>
                         </div>
                     </div>
                 </div>
